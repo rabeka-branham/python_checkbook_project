@@ -1,4 +1,4 @@
-import sys
+greeting = '\n~~~ Welcome to your terminal checkbook! ~~~'
 
 def options():
     print('\nWhat would you like to do?\n')
@@ -6,7 +6,7 @@ def options():
     print('2) record a debit (withdraw)')
     print('3) record a credit (deposit)')
     print('4) exit\n')
-    
+
 def balance():
     with open('balance.txt') as f:
         balance = float(f.read())
@@ -14,28 +14,37 @@ def balance():
     
 def debit():
     with open('balance.txt') as f:
-         balance = float(f.read())
-    debit_amount = float(input('\nHow much is the debit? '))
-    balance_with_debit = str(balance + debit_amount)
-    with open('balance.txt', 'w') as f:
-        f.write(balance_with_debit)
+        balance = float(f.read())
+    while True:
+        debit_amount = input('\nHow much is the debit? ')
+        if debit_amount.isdigit() == True:
+            debit_amount = float(debit_amount)
+            balance_with_debit = str(balance - debit_amount)
+            with open('balance.txt', 'w') as f:
+                f.write(balance_with_debit)
+            break
+        else:
+            print('Invalid input!')
 
 def credit():
     with open('balance.txt') as f:
-         balance = float(f.read())
-    credit_amount = float(input('\nHow much is the credit? '))
-    balance_with_credit = str(balance - credit_amount)
-    with open('balance.txt', 'w') as f:
-        f.write(balance_with_credit)
+        balance = float(f.read())
+    while True:
+        credit_amount = input('\nHow much is the credit? ')
+        if credit_amount.isdigit() == True:
+            credit_amount = float(credit_amount)
+            balance_with_credit = str(balance + credit_amount)
+            with open('balance.txt', 'w') as f:
+                f.write(balance_with_credit)
+            break
+        else:
+            print('Invalid input!')
         
 def exit():
-    print('\nThanks, have a great day!')
-    
-greeting = '~~~ Welcome to your terminal checkbook! ~~~'
-
+    print('\nThanks, have a great day!\n')
+      
 print(greeting)
 options()
-
 while True:
     choice = input('Your choice? ')
     if choice.isdigit() == True and 0 < int(choice) < 5:
